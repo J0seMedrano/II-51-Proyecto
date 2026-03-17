@@ -278,3 +278,82 @@ h1, h2, h3, h4, h5,
   background: var(--color-primary-dark);
   color: #fff;
 }
+/* ----------------------  Dashboard cliente ---------------------- */
+.dashboard-saludo {
+  background: var(--color-white);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.dashboard-address-banner {
+  background: linear-gradient(120deg, var(--color-primary-dark) 0%, var(--color-primary) 100%);
+  border-radius: 14px;
+  padding: 24px 28px;
+}
+
+.dashboard-address-icon {
+  font-size: 2rem;
+  line-height: 1;
+}
+
+.dashboard-card {
+  background: var(--color-white);
+  border: 1px solid var(--color-border);
+  border-radius: 16px;
+  padding: 28px 22px;
+  cursor: pointer;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.05);
+  transition: box-shadow 0.2s, transform 0.15s;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.dashboard-card:hover {
+  box-shadow: 0 10px 28px rgba(31, 60, 136, 0.12);
+  transform: translateY(-3px);
+}
+
+/* Variante destacada (Tus paquetes) */
+.dashboard-card-highlight {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+}
+
+.dashboard-card-highlight .dashboard-card-title,
+.dashboard-card-highlight .dashboard-card-desc,
+.dashboard-card-highlight .dashboard-card-link {
+  color: #fff !important;
+}
+
+.dashboard-card-highlight .dashboard-card-link {
+  opacity: 0.85;
+}
+
+.dashboard-card-icon {
+  font-size: 2.2rem;
+  line-height: 1;
+}
+
+.dashboard-card-title {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  font-size: 1rem;
+  color: var(--color-primary-dark);
+  margin: 0;
+}
+
+.dashboard-card-desc {
+  font-size: 0.87rem;
+  color: #5a6477;
+  margin: 0;
+  line-height: 1.5;
+  flex: 1;
+}
+
+.dashboard-card-link {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--color-primary);
+  margin-top: auto;
+}
