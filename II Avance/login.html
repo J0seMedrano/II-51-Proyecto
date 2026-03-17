@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Login Usuario</title>
+    <link rel="stylesheet" href="style.css">
+    
+</head>
+
+<body class ="is-index">
+    <header>
+        <h1 class="title">Ingreso de Usuario</h1>
+    </header>
+    <main>
+        <section class="form-box">
+            <h3 class="section-title">Iniciar sesión</h3>
+            <form id="formLogin">
+                <label>Correo</label>
+                <input class="form-input input-dark" type="email" id="correo" required>
+                <label>Contraseña</label>
+                <input class="form-input input-dark" type="password" id="password" required>
+               <button class="submit-button btn-login" type="submit">Ingresar</button>
+               
+                <p class="login-extra">
+                    ¿No tienes cuenta?
+                    <a href="registro.html">Crear cuenta</a>
+                </p>
+
+            </form>
+            <div id="mensajeLogin" style="margin-top:15px;"></div>
+        </section>
+    </main>
+
+    <script type="module">
+        import { supabase } from "./supabase.js";
+        const form = document.getElementById("formLogin");
+        form.addEventListener("submit", async function (e) {
+
+            e.preventDefault();
+
+            let correo = document.getElementById("correo").value;
+            let password = document.getElementById("password").value;
+
+            const { data, error } = await supabase
+                .from("usuarios")
+                .select("*")
+                .eq("correo", correo)
+                .eq("password", password)
+                .single();
+
+            if (error) {
+                document.getElementById("mensajeLogin").innerHTML =
+                    "<span style='color:red'>Usuario o contraseña incorrectos</span>";
+
+            } else {
+                document.getElementById("mensajeLogin").innerHTML =
+                    "<span style='color:green'>Login correcto</span>";
+
+                /* guardar sesión simple */
+                localStorage.setItem("usuario", JSON.stringify(data));
+
+                /* redireccionar */
+                setTimeout(() => {
+                    window.location.href = "index.html";
+                }, 1500);
+            }
+        });
+
+    </script>
+
+</body>
+
+</html>
