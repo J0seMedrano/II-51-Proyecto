@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rastreo de Envío</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body class = "is-index">
+  <header>
+    <h1 id="main-title" class="title">Rastreo de Envíos</h1>
+    <h2 class="title">Casillero Internacional</h2>
+
+    <nav class="nav-menu" aria-label="Navegación principal">
+      <ul class="nav-list">
+        <li><a class="nav-item" href="index.html">Inicio</a></li>
+        <li><a class="nav-item" href="#ayuda.html">Ayuda</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section>
+      <h3 class="section-title">Buscar envío</h3>
+
+      <!-- Caja de rastreo -->
+        <label for="track">Número de rastreo</label>
+        <input 
+          class="form-input input-dark"
+          type="text"
+          id="track"
+          name="track"
+          placeholder="UCBOX123456"
+          required
+        >
+
+        <button type="submit" class="submit-button">Rastrear</button>
+      </form>
+    </section>
+
+    <!-- Resultado simulado -->
+    <section style="margin-top:25px;">
+      <h3 class="section-title">Estado del envío</h3>
+
+      <div class="faq">
+        <summary>Ingrese un código válido para ver el estado</summary>
+        <p>Ejemplo: UCBOX123456</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>&copy; 2026 Casillero Internacional </p>
+  </footer>
+</body>
+</html>
