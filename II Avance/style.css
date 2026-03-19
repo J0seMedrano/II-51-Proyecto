@@ -357,3 +357,227 @@ h1, h2, h3, h4, h5,
   color: var(--color-primary);
   margin-top: auto;
 }
+/* ----------------------  Rastreo ---------------------- */
+.rastreo-estado-banner {
+  background: linear-gradient(120deg, var(--color-primary-dark) 0%, var(--color-primary) 100%);
+  border-radius: 14px;
+  padding: 22px 24px;
+}
+
+.rastreo-estado-icon {
+  font-size: 2.2rem;
+  line-height: 1;
+}
+
+.rastreo-label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--color-secondary);
+  margin-bottom: 2px;
+}
+
+.rastreo-valor {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--color-primary-dark);
+  margin: 0;
+}
+
+/* Historial de pasos */
+.rastreo-historial {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.rastreo-paso {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 12px 14px;
+  border-radius: 10px;
+  border: 1px solid var(--color-border);
+}
+
+.rastreo-paso-activo {
+  background: #eef4ff;
+  border-color: var(--color-primary);
+}
+
+.rastreo-paso-inactivo {
+  background: #f9f9f9;
+  opacity: 0.55;
+}
+
+.rastreo-paso-icono {
+  font-size: 1.4rem;
+  line-height: 1;
+  min-width: 28px;
+  text-align: center;
+}
+
+.rastreo-paso-info { flex: 1; }
+
+.rastreo-paso-label {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  font-size: 0.88rem;
+  color: var(--color-primary-dark);
+  margin: 0;
+}
+
+.rastreo-paso-fecha {
+  font-size: 0.82rem;
+  color: #5a6477;
+  margin: 2px 0 0;
+}
+/* ----------------------  Pre-alerta ---------------------- */
+.prealerta-item {
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 12px;
+  transition: box-shadow 0.15s;
+}
+
+.prealerta-item:hover {
+  box-shadow: 0 4px 14px rgba(31, 60, 136, 0.08);
+}
+
+.prealerta-item:last-child {
+  margin-bottom: 0;
+}
+
+/* Select con estilo input-dark */
+select.input-dark {
+  background-color: var(--color-primary-dark) !important;
+  color: #fff !important;
+  border-color: var(--color-primary) !important;
+}
+
+select.input-dark option {
+  background-color: var(--color-primary-dark);
+  color: #fff;
+}
+
+select.input-dark:focus {
+  box-shadow: 0 0 0 0.25rem rgba(31, 60, 136, 0.35) !important;
+}
+/* ----------------------  Paquetes ---------------------- */
+.paquete-card {
+  background: var(--color-white);
+  border: 1px solid var(--color-border);
+  border-radius: 14px;
+  padding: 20px;
+  margin-bottom: 14px;
+  cursor: pointer;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.04);
+  transition: box-shadow 0.2s, transform 0.15s;
+}
+
+.paquete-card:hover {
+  box-shadow: 0 8px 24px rgba(31, 60, 136, 0.10);
+  transform: translateY(-2px);
+}
+
+.paquete-label {
+  font-size: 0.78rem;
+  color: #6c757d;
+  margin-bottom: 2px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.paquete-valor {
+  font-weight: 600;
+  font-size: 0.92rem;
+  color: var(--color-text);
+  margin-bottom: 0;
+}
+
+.paquete-ver-detalle {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--color-primary);
+  font-family: 'Montserrat', sans-serif;
+}
+
+/* Badges de estado */
+.badge-estado {
+  display: inline-block;
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  font-family: 'Montserrat', sans-serif;
+  white-space: nowrap;
+}
+
+.badge-transito {
+  background: #fff3cd;
+  color: #856404;
+}
+
+.badge-recibido {
+  background: #cff4fc;
+  color: #055160;
+}
+
+.badge-entregado {
+  background: #d1e7dd;
+  color: #0a3622;
+}
+
+/* Botones de filtro */
+.btn-filtro {
+  background: var(--color-white);
+  border: 1px solid var(--color-border);
+  color: var(--color-text);
+  border-radius: 20px;
+  padding: 6px 18px;
+  font-size: 0.85rem;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+  transition: all 0.15s;
+}
+
+.btn-filtro:hover {
+  background: #eef2f9;
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+
+.btn-filtro.activo {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+  color: #fff;
+}
+/* ----------------------  Cuenta ---------------------- */
+.cuenta-perfil-header {
+  background: linear-gradient(120deg, var(--color-primary-dark) 0%, var(--color-primary) 100%);
+  border-radius: 14px;
+  padding: 24px 28px;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  flex-wrap: wrap;
+}
+
+.cuenta-avatar {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: var(--color-accent);
+  color: var(--color-primary-dark);
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 800;
+  font-size: 1.4rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
