@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Pre-alertar Paquete — Casillero Internacional</title>
+
+  <!-- Bootstrap 5 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Estilos propios -->
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg bg-white border-bottom shadow-sm sticky-top">
+    <div class="container">
+      <a class="navbar-brand d-flex align-items-center gap-2" href="index.html">
+        <div class="brand-icon">📦</div>
+        <div class="brand-name">
+          Casillero
+          <span>Internacional CR</span>
+        </div>
+      </a>
+      <button class="navbar-toggler" type="button"
+        data-bs-toggle="collapse" data-bs-target="#mainNav"
+        aria-controls="mainNav" aria-expanded="false" aria-label="Abrir menu">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="mainNav">
+        <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-1">
+          <li class="nav-item"><a class="nav-link fw-semibold" href="dashboard_cliente.html">Mi dashboard</a></li>
+          <li class="nav-item"><a class="nav-link fw-semibold" href="rastreo.html">Rastrear</a></li>
+          <li class="nav-item">
+            <button class="btn btn-outline-danger btn-sm px-3" id="btnCerrarSesion">Cerrar sesion</button>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Encabezado -->
+  <div class="dashboard-saludo py-4">
+    <div class="container">
+      <h2 class="fw-bold mb-0">Pre-alertar paquete</h2>
+      <p class="text-muted mb-0 mt-1">Notificanos sobre un paquete que esta en camino a tu casillero</p>
+    </div>
+  </div>
+
+  <main class="py-4">
+    <div class="container">
+      <div class="row g-4">
+
+        <!-- Formulario nueva pre-alerta -->
+        <div class="col-12 col-lg-5">
+          <div class="card border shadow-sm registro-card h-100">
+            <div class="card-body p-4">
+
+              <h5 class="fw-bold mb-4" style="color:var(--color-primary-dark)">Nueva pre-alerta</h5>
+
+              <form id="formPrealerta" novalidate>
+
+                <div class="mb-3">
+                  <label for="numero_tracking" class="form-label fw-semibold">
+                    Numero de tracking <span class="text-danger">*</span>
+                  </label>
+                  <input type="text" class="form-control input-dark" id="numero_tracking"
+                    placeholder="Ej: 1Z999AA10123456784" required maxlength="100">
+                </div>
+
+                <div class="mb-3">
+                  <label for="proveedor_tienda" class="form-label fw-semibold">
+                    Proveedor / Tienda <span class="text-danger">*</span>
+                  </label>
+                  <select class="form-select input-dark" id="proveedor_tienda" required>
+                    <option value="" disabled selected>Selecciona una tienda</option>
+                    <option value="Amazon">Amazon</option>
+                    <option value="eBay">eBay</option>
+                    <option value="Walmart">Walmart</option>
+                    <option value="Shein">Shein</option>
+                    <option value="AliExpress">AliExpress</option>
+                    <option value="Nike">Nike</option>
+                    <option value="Adidas">Adidas</option>
+                    <option value="Best Buy">Best Buy</option>
+                    <option value="Target">Target</option>
+                    <option value="Otro">Otro</option>
+                  </select>
+                </div>
+
+                <div class="mb-3">
+                  <label for="descripcion_producto" class="form-label fw-semibold">
+                    Descripcion del producto <span class="text-danger">*</span>
+                  </label>
+                  <input type="text" class="form-control input-dark" id="descripcion_producto"
+                    placeholder="Ej: Tenis Nike Air Max talla 42" required maxlength="255">
+                </div>
+
+                <div class="mb-4">
+                  <label for="valor_declarado" class="form-label fw-semibold">
+                    Valor declarado (USD) <span class="text-danger">*</span>
+                  </label>
+                  <div class="input-group">
+                    <span class="input-group-text bg-dark text-white border-0">$</span>
+                    <input type="number" class="form-control input-dark" id="valor_declarado"
+                      placeholder="0.00" step="0.01" min="0" required>
+                  </div>
+                  <p class="hint mt-1">El valor declarado se usa para calcular el seguro si aplica.</p>
+                </div>
+
+                <button type="submit" class="btn btn-primary w-100 py-2 fw-bold" id="btnPrealerta">
+                  Enviar pre-alerta
+                </button>
+
+              </form>
+
+              <div id="mensajePrealerta" class="mt-3"></div>
+
+            </div>
+          </div>
+        </div>
+
+        <!-- Historial de pre-alertas -->
+        <div class="col-12 col-lg-7">
+          <div class="card border shadow-sm registro-card h-100">
+            <div class="card-body p-4">
+
+              <h5 class="fw-bold mb-4" style="color:var(--color-primary-dark)">Mis pre-alertas</h5>
+
+              <div id="spinnerHistorial" class="text-center py-4">
+                <div class="spinner-border text-primary" role="status">
+                  <span class="visually-hidden">Cargando...</span>
+                </div>
+                <p class="mt-2 text-muted small">Cargando historial...</p>
+              </div>
+
+              <div id="historialPrealertas"></div>
+
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <!-- Modal de edicion -->
+  <div class="modal fade" id="modalEditar" tabindex="-1" aria-labelledby="modalEditarLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content registro-card">
+        <div class="modal-header border-0 pb-0">
+          <h5 class="modal-title fw-bold" id="modalEditarLabel" style="color:var(--color-primary-dark)">
+            Editar pre-alerta
+          </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+        </div>
+        <div class="modal-body">
+
+          <!-- Campo oculto con el id de la pre-alerta a editar -->
+          <input type="hidden" id="editId">
+
+          <form id="formEditar" novalidate>
+
+            <div class="mb-3">
+              <label for="editTracking" class="form-label fw-semibold">
+                Numero de tracking <span class="text-danger">*</span>
+              </label>
+              <input type="text" class="form-control input-dark" id="editTracking"
+                required maxlength="100">
+            </div>
+
+            <div class="mb-3">
+              <label for="editProveedor" class="form-label fw-semibold">
+                Proveedor / Tienda <span class="text-danger">*</span>
+              </label>
+              <select class="form-select input-dark" id="editProveedor" required>
+                <option value="Amazon">Amazon</option>
+                <option value="eBay">eBay</option>
+                <option value="Walmart">Walmart</option>
+                <option value="Shein">Shein</option>
+                <option value="AliExpress">AliExpress</option>
+                <option value="Nike">Nike</option>
+                <option value="Adidas">Adidas</option>
+                <option value="Best Buy">Best Buy</option>
+                <option value="Target">Target</option>
+                <option value="Otro">Otro</option>
+              </select>
+            </div>
+
+            <div class="mb-3">
+              <label for="editDescripcion" class="form-label fw-semibold">
+                Descripcion del producto <span class="text-danger">*</span>
+              </label>
+              <input type="text" class="form-control input-dark" id="editDescripcion"
+                required maxlength="255">
+            </div>
+
+            <div class="mb-4">
+              <label for="editValor" class="form-label fw-semibold">
+                Valor declarado (USD) <span class="text-danger">*</span>
+              </label>
+              <div class="input-group">
+                <span class="input-group-text bg-dark text-white border-0">$</span>
+                <input type="number" class="form-control input-dark" id="editValor"
+                  step="0.01" min="0" required>
+              </div>
+            </div>
+
+            <div class="d-flex gap-2">
+              <button type="submit" class="btn btn-primary fw-bold flex-grow-1" id="btnGuardarEdicion">
+                Guardar cambios
+              </button>
+              <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                Cancelar
+              </button>
+            </div>
+
+          </form>
+
+          <div id="mensajeEditar" class="mt-3"></div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="site-footer mt-5">
+    <div class="footer-bottom text-center py-3">
+      &copy; 2026 Casillero Internacional &mdash; Todos los derechos reservados
+    </div>
+  </footer>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- Logica de pre-alerta -->
+  <script type="module" src="prealerta.js"></script>
+
+</body>
+</html>

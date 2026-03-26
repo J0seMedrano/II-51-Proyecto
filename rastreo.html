@@ -1,57 +1,162 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Rastreo de Envío</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Rastreo — Casillero Internacional</title>
+
+  <!-- Bootstrap 5 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Estilos propios -->
   <link rel="stylesheet" href="style.css">
 </head>
 
-<body class = "is-index">
-  <header>
-    <h1 id="main-title" class="title">Rastreo de Envíos</h1>
-    <h2 class="title">Casillero Internacional</h2>
+<body>
 
-    <nav class="nav-menu" aria-label="Navegación principal">
-      <ul class="nav-list">
-        <li><a class="nav-item" href="index.html">Inicio</a></li>
-        <li><a class="nav-item" href="#ayuda.html">Ayuda</a></li>
-      </ul>
-    </nav>
-  </header>
-
-  <main>
-    <section>
-      <h3 class="section-title">Buscar envío</h3>
-
-      <!-- Caja de rastreo -->
-        <label for="track">Número de rastreo</label>
-        <input 
-          class="form-input input-dark"
-          type="text"
-          id="track"
-          name="track"
-          placeholder="UCBOX123456"
-          required
-        >
-
-        <button type="submit" class="submit-button">Rastrear</button>
-      </form>
-    </section>
-
-    <!-- Resultado simulado -->
-    <section style="margin-top:25px;">
-      <h3 class="section-title">Estado del envío</h3>
-
-      <div class="faq">
-        <summary>Ingrese un código válido para ver el estado</summary>
-        <p>Ejemplo: UCBOX123456</p>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg bg-white border-bottom shadow-sm sticky-top">
+    <div class="container">
+      <a class="navbar-brand d-flex align-items-center gap-2" href="index.html">
+        <div class="brand-icon">📦</div>
+        <div class="brand-name">
+          Casillero
+          <span>Internacional CR</span>
+        </div>
+      </a>
+      <button class="navbar-toggler" type="button"
+        data-bs-toggle="collapse" data-bs-target="#mainNav"
+        aria-controls="mainNav" aria-expanded="false" aria-label="Abrir menú">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="mainNav">
+        <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-1">
+          <li class="nav-item"><a class="nav-link fw-semibold" href="dashboard_cliente.html">Mi dashboard</a></li>
+          <li class="nav-item">
+            <button class="btn btn-outline-danger btn-sm px-3" id="btnCerrarSesion">Cerrar sesión</button>
+          </li>
+        </ul>
       </div>
-    </section>
+    </div>
+  </nav>
+
+  <!-- Encabezado -->
+  <div class="dashboard-saludo py-4">
+    <div class="container">
+      <h2 class="fw-bold mb-0">Rastreo de paquetes 📦</h2>
+      <p class="text-muted mb-0 mt-1">Ingresa el número de guía para consultar el estado de tu paquete</p>
+    </div>
+  </div>
+
+  <main class="py-5">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-12 col-md-8 col-lg-6">
+
+          <!-- Formulario de búsqueda -->
+          <div class="card border shadow-sm registro-card mb-4">
+            <div class="card-body p-4">
+              <form id="formRastreo" novalidate>
+                <label for="guia" class="form-label fw-semibold">
+                  Número de guía <span class="text-danger">*</span>
+                </label>
+                <div class="input-group">
+                  <input
+                    type="text"
+                    class="form-control input-dark"
+                    id="guia"
+                    placeholder="Ej: UCBOX123456"
+                    required
+                  >
+                  <button class="btn btn-primary fw-bold px-4" type="submit" id="btnRastrear">
+                    Rastrear
+                  </button>
+                </div>
+                <p class="hint mt-2">Puedes encontrar tu número de guía en el correo de confirmación de tu tienda.</p>
+              </form>
+            </div>
+          </div>
+
+          <!-- Mensaje de error / no encontrado -->
+          <div id="mensajeRastreo" class="mb-4"></div>
+
+          <!-- Resultado del rastreo -->
+          <div id="resultadoRastreo" class="d-none">
+
+            <!-- Estado visual -->
+            <div class="rastreo-estado-banner mb-4">
+              <div class="d-flex align-items-center gap-3">
+                <div class="rastreo-estado-icon" id="estadoIcono">📦</div>
+                <div>
+                  <p class="mb-0 text-white-50 small text-uppercase fw-bold">Estado actual</p>
+                  <p class="mb-0 fw-bold fs-5 text-white" id="estadoTexto">—</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Detalle del paquete -->
+            <div class="card border shadow-sm registro-card mb-4">
+              <div class="card-body p-4">
+                <h5 class="fw-bold mb-3 section-heading" style="font-size:1rem;">Detalle del paquete</h5>
+
+                <div class="row g-3">
+                  <div class="col-6">
+                    <p class="rastreo-label">Número de guía</p>
+                    <p class="rastreo-valor" id="detalleGuia">—</p>
+                  </div>
+                  <div class="col-6">
+                    <p class="rastreo-label">Descripción</p>
+                    <p class="rastreo-valor" id="detalleDescripcion">—</p>
+                  </div>
+                  <div class="col-6">
+                    <p class="rastreo-label">Peso</p>
+                    <p class="rastreo-valor" id="detallePeso">—</p>
+                  </div>
+                  <div class="col-6">
+                    <p class="rastreo-label">Dimensiones (cm)</p>
+                    <p class="rastreo-valor" id="detalleDimensiones">—</p>
+                  </div>
+                  <div class="col-6">
+                    <p class="rastreo-label">Fecha de recepción</p>
+                    <p class="rastreo-valor" id="detalleFechaRecepcion">—</p>
+                  </div>
+                  <div class="col-6">
+                    <p class="rastreo-label">Fecha de entrega</p>
+                    <p class="rastreo-valor" id="detalleFechaEntrega">—</p>
+                  </div>
+                  <div class="col-12">
+                    <p class="rastreo-label">Monto cancelado</p>
+                    <p class="rastreo-valor" id="detalleMonto">—</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Historial de estados -->
+            <div class="card border shadow-sm registro-card">
+              <div class="card-body p-4">
+                <h5 class="fw-bold mb-3 section-heading" style="font-size:1rem;">Historial de estados</h5>
+                <div id="historialEstados" class="rastreo-historial"></div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
   </main>
 
-  <footer class="footer">
-    <p>&copy; 2026 Casillero Internacional </p>
+  <!-- Footer -->
+  <footer class="site-footer mt-5">
+    <div class="footer-bottom text-center py-3">
+      © 2026 Casillero Internacional — Todos los derechos reservados
+    </div>
   </footer>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- Lógica de rastreo -->
+  <script type="module" src="rastreo.js"></script>
+
 </body>
 </html>

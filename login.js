@@ -1,11 +1,15 @@
 import { supabase } from "./supabase.js";
 
-/* ---- Mostrar / ocultar contraseña ---- */
+/* ---- Credencial de administrador ---- */
+const ADMIN_CORREO   = "root@admin.com";
+const ADMIN_PASSWORD = "r00T@!";
+
+/* ---- Mostrar / ocultar contrasena ---- */
 document.querySelectorAll(".btn-toggle-password").forEach(btn => {
   btn.addEventListener("click", function () {
     const targetId = this.getAttribute("data-target");
-    const input = document.getElementById(targetId);
-    input.type = input.type === "password" ? "text" : "password";
+    const input    = document.getElementById(targetId);
+    input.type     = input.type === "password" ? "text" : "password";
     this.textContent = input.type === "password" ? "👁" : "🙈";
   });
 });
@@ -16,28 +20,23 @@ const form = document.getElementById("formLogin");
 form.addEventListener("submit", async function (e) {
   e.preventDefault();
 
-  // Limpiar mensajes previos
   document.getElementById("errorPassword").textContent = "";
-  document.getElementById("mensajeLogin").innerHTML = "";
+  document.getElementById("mensajeLogin").innerHTML    = "";
 
-  // Obtener valores
   const correo   = document.getElementById("correo").value.trim();
   const password = document.getElementById("password").value;
 
-  // Validación básica
   if (!correo || !password) {
     document.getElementById("mensajeLogin").innerHTML =
       "<div class='alert alert-warning'>Por favor completa todos los campos.</div>";
     return;
   }
 
-  // Deshabilitar botón mientras se procesa
   const btn = document.getElementById("btnLogin");
-  btn.disabled = true;
+  btn.disabled    = true;
   btn.textContent = "Verificando...";
 
   // Verificar usuario en Supabase
-  // Busca el registro que coincida con correo Y password
   const { data, error } = await supabase
     .from("usuarios")
     .select("id_usuario, nombre, correo, telefono, direccion, estado")
@@ -45,33 +44,40 @@ form.addEventListener("submit", async function (e) {
     .eq("password", password)
     .single();
 
-  // Error de Supabase o credenciales incorrectas
   if (error) {
     document.getElementById("mensajeLogin").innerHTML =
-      "<div class='alert alert-danger'>Correo o contraseña incorrectos.</div>";
-    btn.disabled = false;
+      "<div class='alert alert-danger'>Correo o contrasena incorrectos.</div>";
+    btn.disabled    = false;
     btn.textContent = "Ingresar";
     return;
   }
 
-  // Verificar que la cuenta esté activa
   if (!data.estado) {
     document.getElementById("mensajeLogin").innerHTML =
-      "<div class='alert alert-warning'>Tu cuenta está desactivada. Contacta a soporte.</div>";
-    btn.disabled = false;
+      "<div class='alert alert-warning'>Tu cuenta esta desactivada. Contacta a soporte.</div>";
+    btn.disabled    = false;
     btn.textContent = "Ingresar";
     return;
   }
 
-  // Login correcto — guardar sesión en localStorage (sin password)
+  // Guardar sesion en localStorage
   localStorage.setItem("usuario", JSON.stringify(data));
 
-  // Mostrar éxito y redirigir
-  document.getElementById("mensajeLogin").innerHTML =
-    "<div class='alert alert-success'>✅ Bienvenido, " + data.nombre + ". Redirigiendo...</div>";
-
-  setTimeout(() => {
-    window.location.href = "dashboard_cliente.html";
-  }, 1500);
+  // Detectar si es administrador y redirigir segun rol
+  if (correo === ADMIN_CORREO && password === ADMIN_PASSWORD) {
+    localStorage.setItem("rol", "admin");
+    document.getElementById("mensajeLogin").innerHTML =
+      "<div class='alert alert-success'>Bienvenido, Administrador. Redirigiendo...</div>";
+    setTimeout(() => {
+      window.location.href = "dashboard_admin.html";
+    }, 1500);
+  } else {
+    localStorage.setItem("rol", "cliente");
+    document.getElementById("mensajeLogin").innerHTML =
+      "<div class='alert alert-success'>Bienvenido, " + data.nombre + ". Redirigiendo...</div>";
+    setTimeout(() => {
+      window.location.href = "dashboard_cliente.html";
+    }, 1500);
+  }
 
 });
