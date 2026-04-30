@@ -10,7 +10,8 @@ document.querySelectorAll(".btn-toggle-password").forEach(btn => {
     const targetId = this.getAttribute("data-target");
     const input    = document.getElementById(targetId);
     input.type     = input.type === "password" ? "text" : "password";
-    this.textContent = input.type === "password" ? "👁" : "🙈";
+    this.textContent = input.type === "password" ? "👁" : "";
+
   });
 });
 
